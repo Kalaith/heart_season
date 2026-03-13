@@ -23,4 +23,5 @@ return static function (\App\Core\Router $router): void {
     $router->get('/api/rumors', [CastController::class, 'rumors'], [WebHatcheryJwtMiddleware::class]);
     $router->get('/api/reputation', [ReputationController::class, 'current'], [WebHatcheryJwtMiddleware::class]);
     $router->post('/api/admin/rounds/resolve-due', [SystemController::class, 'resolveDueRounds']);
+    $router->post('/api/admin/rounds/resolve-now', [SystemController::class, 'resolveCurrentRoundNow']);
 };

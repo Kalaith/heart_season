@@ -1,13 +1,17 @@
 import type { FC } from 'react';
+import { useState } from 'react';
+import { resolveCurrentRoundNow } from '../api/services/rounds';
 import { Panel } from '../components/ui/Panel';
 import { useBootstrapData } from '../hooks/useBootstrapData';
 import { useGameStore } from '../stores/gameStore';
 import { useUiStore } from '../stores/uiStore';
 
 export const DashboardPage: FC = () => {
-  useBootstrapData();
+  const refreshData = useBootstrapData();
   const seasonState = useGameStore(state => state.seasonState);
   const message = useUiStore(state => state.message);
+  const setMessage = useUiStore(state => state.setMessage);
+  const [isResolvingNow, setIsResolvingNow] = useState(false);
   const reputation = seasonState?.player_reputation;
   const topStats = reputation
     ? [
@@ -17,6 +21,19 @@ export const DashboardPage: FC = () => {
         { label: 'Sincerity', value: reputation.sincerity },
       ]
     : [];
+
+  const resolveNow = async (): Promise<void> => {
+    setIsResolvingNow(true);
+    try {
+      await resolveCurrentRoundNow();
+      await refreshData();
+      setMessage('Round resolved immediately for testing.');
+    } catch {
+      setMessage('Unable to resolve the current round right now.');
+    } finally {
+      setIsResolvingNow(false);
+    }
+  };
 
   return (
     <div className="grid gap-4 lg:grid-cols-[1.3fr_0.7fr]">
@@ -36,6 +53,18 @@ export const DashboardPage: FC = () => {
                 {seasonState.current_round.event_type} episode. Plans lock at{' '}
                 {seasonState.current_round.locks_at}.
               </p>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <button
+                  className="rounded-full bg-[#8a365b] px-5 py-3 text-sm font-medium text-white shadow-[0_16px_30px_rgba(138,54,91,0.22)] transition hover:bg-[#9d4068] disabled:cursor-not-allowed disabled:opacity-60"
+                  onClick={() => void resolveNow()}
+                  disabled={isResolvingNow || seasonState.current_round.status !== 'open'}
+                >
+                  {isResolvingNow ? 'Resolving Round...' : 'Resolve Round Now'}
+                </button>
+                <p className="text-xs uppercase tracking-[0.22em] text-[#9b516d]">
+                  Testing control
+                </p>
+              </div>
             </div>
             <div className="grid gap-3 sm:grid-cols-3">
               <div className="rounded-2xl bg-[#fff6f8] px-4 py-4">

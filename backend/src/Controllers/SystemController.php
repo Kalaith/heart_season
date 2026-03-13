@@ -34,4 +34,24 @@ final class SystemController
 
         $response->success(['resolved_rounds' => count($rounds)]);
     }
+
+    public function resolveCurrentRoundNow(Request $request, Response $response): void
+    {
+        $round = $this->roundRepository->getOpenRound();
+        if ($round === null) {
+            $response->success([
+                'resolved_rounds' => 0,
+                'message' => 'No open round available to resolve.',
+            ]);
+            return;
+        }
+
+        $this->resolveRoundAction->execute((int) $round['id']);
+
+        $response->success([
+            'resolved_rounds' => 1,
+            'round_id' => (int) $round['id'],
+            'round_number' => (int) $round['round_number'],
+        ]);
+    }
 }

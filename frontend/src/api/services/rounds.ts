@@ -10,3 +10,7 @@ export const fetchLatestResults = async (): Promise<PlayerResult | null> => {
   const response = await apiClient.get<{ success: boolean; data: PlayerResult | null }>('/api/round/results');
   return response.data.data;
 };
+
+export const resolveCurrentRoundNow = async (): Promise<void> => {
+  await apiClient.post('/api/admin/rounds/resolve-now');
+};

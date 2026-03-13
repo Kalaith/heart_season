@@ -51,6 +51,13 @@ final class RoundRepository
         return $round === false ? null : $round;
     }
 
+    public function getOpenRound(): ?array
+    {
+        $statement = $this->db->query("SELECT * FROM rounds WHERE status = 'open' ORDER BY id DESC LIMIT 1");
+        $round = $statement->fetch();
+        return $round === false ? null : $round;
+    }
+
     public function getLatestResolvedRound(): ?array
     {
         $statement = $this->db->query("SELECT * FROM rounds WHERE status = 'resolved' ORDER BY id DESC LIMIT 1");
