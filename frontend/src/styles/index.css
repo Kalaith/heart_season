@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(255, 215, 223, 0.95), transparent 35%),
+    linear-gradient(180deg, #fff8f4 0%, #ffe8ee 45%, #ffd5de 100%);
+  color: #2f1630;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
