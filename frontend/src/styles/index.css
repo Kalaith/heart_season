@@ -3,11 +3,11 @@
 
 :root {
   color-scheme: light;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: Aptos, "Segoe UI", "Trebuchet MS", sans-serif;
   background:
-    radial-gradient(circle at top, rgba(255, 215, 223, 0.92), transparent 30%),
-    radial-gradient(circle at right top, rgba(255, 239, 186, 0.7), transparent 28%),
-    linear-gradient(180deg, #fffaf6 0%, #ffeef2 48%, #ffd8e1 100%);
+    radial-gradient(circle at top, rgba(255, 222, 228, 0.95), transparent 24%),
+    radial-gradient(circle at 85% 12%, rgba(255, 238, 199, 0.78), transparent 22%),
+    linear-gradient(180deg, #fffaf5 0%, #fff0f3 42%, #ffe0e8 100%);
   color: #2f1630;
 }
 
@@ -15,8 +15,13 @@ body {
   margin: 0;
   min-height: 100vh;
   background: transparent;
+  font-family: Aptos, "Segoe UI", "Trebuchet MS", sans-serif;
 }
 
 #root {
   min-height: 100vh;
+}
+
+::selection {
+  background: rgba(217, 113, 151, 0.22);
 }
