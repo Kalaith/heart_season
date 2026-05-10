@@ -1,9 +1,3 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
+import { createWebHatcheryViteConfig } from '../../tools/shared/frontend/viteConfig';
 
-// https://vite.dev/config/
-export default defineConfig({
-  base: '/heart_season/',
-  plugins: [react(), tailwindcss()],
-});
+export default createWebHatcheryViteConfig({ slug: 'heart_season', useAlias: false });
